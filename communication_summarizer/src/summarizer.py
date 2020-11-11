@@ -6,10 +6,12 @@ from communication_trace_msgs.msg import CommunicationTrace
 
 # from -> to
 topic_directions = {
-    '/communication_trace/sensor_dummy_node_ns_topic1': '/communication_trace/no_dependency_node_ns_topic1',
-    '/communication_trace/sensor_dummy_node_ns_topic2': '/communication_trace/sub_dependency_node_ns_topic2',
-    '/communication_trace/no_dependency_node_ns_topic3': '/communication_trace/sub_dependency_node_ns_topic3',
-    '/communication_trace/sub_dependency_node_ns_topic4': '/communication_trace/timer_dependency_node_ns_topic4',
+    '/communication_trace/sensor_dummy_node_topic1': '/communication_trace/no_dependency_node_topic1',
+    '/communication_trace/sensor_dummy_node_topic2': '/communication_trace/sub_dependency_node_topic2',
+    '/communication_trace/no_dependency_node_topic3': '/communication_trace/sub_dependency_node_topic3',
+    '/communication_trace/sub_dependency_node_topic4': '/communication_trace/timer_dependency_node_topic4',
+    '/communication_trace/sub_dependency_node_topic5': '/communication_trace/actuator_dummy_node_topic5',
+    '/communication_trace/timer_dependency_node_topic6': '/communication_trace/actuator_dummy_node_topic6',
 }
 
 def get_swap_dict(d):
@@ -72,6 +74,7 @@ class SummarizeNode(Node):
 
     def export_files(self):
         # TODO: clean
+        # TODO: if zero data, print warn message and skip file exporting
         for communicate_id in self.communicate_ids_:
             print(communicate_id)
             with open(communicate_id + '.csv', mode='w') as f:
