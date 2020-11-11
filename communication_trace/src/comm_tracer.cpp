@@ -12,6 +12,7 @@ CommTracer::CommTracer(std::string node_name, std::string topic_name)
 }
 
 void CommTracer::publish(const std_msgs::msg::Header &header) {
+  // TODO: print error when ComTracer isn't initialized
   auto msg_ =
       std::make_unique<communication_trace_msgs::msg::CommunicationTrace>();
   msg_->header = header;
