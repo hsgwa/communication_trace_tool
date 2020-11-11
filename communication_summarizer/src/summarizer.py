@@ -12,14 +12,9 @@ topic_directions = {
     '/communication_trace/sub_dependency_node_ns_topic4': '/communication_trace/timer_dependency_node_ns_topic4',
 }
 
-# to -> from
-topic_rev_directions = {
-    '/communication_trace/no_dependency_node_ns_topic1': '/communication_trace/sensor_dummy_node_ns_topic1',
-    '/communication_trace/sub_dependency_node_ns_topic2': '/communication_trace/sensor_dummy_node_ns_topic2',
-    '/communication_trace/sub_dependency_node_ns_topic3': '/communication_trace/no_dependency_node_ns_topic3',
-    '/communication_trace/timer_dependency_node_ns_topic4': '/communication_trace/sub_dependency_node_ns_topic4',
-}
-topic_names = []
+def get_swap_dict(d):
+    return {v: k for k, v in d.items()}
+topic_rev_directions = get_swap_dict(topic_directions)
 
 class CicularQueue:
     def __init__(self, capacity):
