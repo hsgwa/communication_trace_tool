@@ -146,7 +146,7 @@ class AggretageNode(Node):
         topic_name_from = topic_name_from[topic_name_from.rfind('/')+1:]
         topic_name_to = topic_name_to[topic_name_to.rfind('/')+1:]
 
-        return '{}->{}'.format(topic_name_from, topic_name_to)
+        return '{}_{}'.format(topic_name_from, topic_name_to)
 
         # TODO: warm log
         return ''
