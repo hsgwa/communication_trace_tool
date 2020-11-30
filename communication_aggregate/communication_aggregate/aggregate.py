@@ -56,7 +56,7 @@ class CicularQueue:
     def __get_next_idx(self, idx):
         return (idx + 1) % self.capacity
 
-class SummarizeNode(Node):
+class AggretageNode(Node):
     # TODO: partition to other class
     def __init__(self, context):
         super().__init__('communication_summarize_node', context=context)
@@ -66,6 +66,9 @@ class SummarizeNode(Node):
         self.time_series_ = {}
         self.stamp_ = {}
         self.communicate_ids_ = [self.__get_communicate_id(_) for _ in topic_directions.keys()]
+        self.declare_parameter('export_dir', './')
+        self.__export_dir = self.get_parameter('export_dir').get_parameter_value().string_value
+        print('export_dir ', self.__export_dir)
         for communicate_id in self.communicate_ids_:
             self.time_series_[communicate_id] = []
             self.stamp_[communicate_id] = []
@@ -179,10 +182,11 @@ class SummarizeNode(Node):
 def main(args=None):
     context = rclpy.context.Context()
     rclpy.init(args=args, context=context)
-    node =  SummarizeNode(context=context)
+    node =  AggretageNode(context=context)
 
     def shutdown(signum, frame):
-        node.export_files()
+        # node.export_files()
+        print('export files')
         context.shutdown()
     signal.signal(signal.SIGINT, shutdown)
 
