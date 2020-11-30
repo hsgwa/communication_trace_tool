@@ -59,7 +59,7 @@ class CicularQueue:
 class AggretageNode(Node):
     # TODO: partition to other class
     def __init__(self, context):
-        super().__init__('communication_summarize_node', context=context)
+        super().__init__('communication_aggregate_node', context=context)
         self.subs_ = []
         self.data_ = {}
         self.timer = self.create_timer(1, self.__update_subscribers) # update every second
