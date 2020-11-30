@@ -117,13 +117,13 @@ class AggretageNode(Node):
         idx = topic_name.rfind('_')
         return topic_name[idx+1:]
 
-    def __calc_latency(self, sub_stamp, pub_stamp):
+    def __calc_latency_us(self, sub_stamp, pub_stamp):
         s = sub_stamp.sec - pub_stamp.sec
         ns = sub_stamp.nanosec - pub_stamp.nanosec
         if ns < 0:
             s = s - 1
             ns = ns + 1e9
-        return ns + s*1e9
+        return ns/1000 + s*1e6
 
     def __get_directed_topic_names(self, topic_name):
         if topic_name in topic_directions:
@@ -174,7 +174,7 @@ class AggretageNode(Node):
             related_msg = self.data_[related_id].find(msg.header.stamp)
             if related_msg == None:
                 return
-            latency = self.__calc_latency(msg.stamp, related_msg.stamp)
+            latency = self.__calc_latency_us(msg.stamp, related_msg.stamp)
 
             self.time_series_[communicate_id].append(latency)
             self.stamp_[communicate_id].append(time.time())
