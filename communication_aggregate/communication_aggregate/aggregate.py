@@ -80,7 +80,9 @@ class AggretageNode(Node):
         # TODO: if zero data, print warn message and skip file exporting
         for communicate_id in self.communicate_ids_:
             print(communicate_id)
-            with open(communicate_id + '.csv', mode='w') as f:
+            export_file = self.__export_dir + communicate_id + '.csv'
+            with open(export_file, mode='w') as f:
+                print('export file : ' ,export_file)
                 for i in range(len(self.time_series_[communicate_id])):
                     f.write('{},{}\n'.format(self.stamp_[communicate_id][i], self.time_series_[communicate_id][i]))
 
@@ -179,14 +181,14 @@ class AggretageNode(Node):
             stamp = msg.stamp
         return callback
 
+
 def main(args=None):
     context = rclpy.context.Context()
     rclpy.init(args=args, context=context)
     node =  AggretageNode(context=context)
+    context.on_shutdown(node.export_files)
 
     def shutdown(signum, frame):
-        # node.export_files()
-        print('export files')
         context.shutdown()
     signal.signal(signal.SIGINT, shutdown)
 
