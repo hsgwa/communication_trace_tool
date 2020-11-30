@@ -20,7 +20,7 @@ find_package(rclcpp REQUIRED)
 find_package(rcl REQUIRED)
 find_package(communication_trace_msgs REQUIRED)
 
-add_library(communication_trace src/comm_tracer.cpp)
+add_library(communication_trace src/comm_trace.cpp)
 ament_target_dependencies(communication_trace rcl rclcpp std_msgs communication_trace_msgs)
 
 include_directories(
