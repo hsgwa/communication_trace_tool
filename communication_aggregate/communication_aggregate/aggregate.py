@@ -84,7 +84,7 @@ class AggretageNode(Node):
             with open(export_file, mode='w') as f:
                 print('export file : ' ,export_file)
                 for i in range(len(self.time_series_[communicate_id])):
-                    f.write('{},{}\n'.format(self.stamp_[communicate_id][i], self.time_series_[communicate_id][i]))
+                    f.write('{},{}\n'.format(i, self.time_series_[communicate_id][i]))
 
     def __update_subscribers(self):
         topic_names_and_types = super().get_topic_names_and_types()
