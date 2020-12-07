@@ -68,7 +68,7 @@ class AggretageNode(Node):
         self.communicate_ids_ = [self.__get_communicate_id(_) for _ in topic_directions.keys()]
         self.declare_parameter('export_dir', './')
         self.__export_dir = self.get_parameter('export_dir').get_parameter_value().string_value
-        print('export_dir ', self.__export_dir)
+        self.get_logger().info('export_dir {}'.format(self.__export_dir))
         for communicate_id in self.communicate_ids_:
             self.time_series_[communicate_id] = []
             self.stamp_[communicate_id] = []
@@ -79,10 +79,10 @@ class AggretageNode(Node):
         # TODO: clean
         # TODO: if zero data, print warn message and skip file exporting
         for communicate_id in self.communicate_ids_:
-            print(communicate_id)
+            self.get_logger().info(communicate_id)
             export_file = self.__export_dir + communicate_id + '.csv'
             with open(export_file, mode='w') as f:
-                print('export file : ' ,export_file)
+                self.get_logger().info('export file : {}'.format(export_file))
                 for i in range(len(self.time_series_[communicate_id])):
                     f.write('{},{}\n'.format(i, self.time_series_[communicate_id][i]))
 
@@ -97,7 +97,7 @@ class AggretageNode(Node):
             if topic_name in self.data_:
                 continue
 
-            print('recording {}'.format(topic_name))
+            self.get_logger().info('recording {}'.format(topic_name))
             suffix = self.__get_suffix(topic_name)
             self.data_[topic_name] = CicularQueue(capacity = 10)
 
@@ -168,7 +168,7 @@ class AggretageNode(Node):
                 related_id = topic_rev_directions[topic_name]
 
             if related_id not in self.data_:
-                print(related_id, 'is not found.')
+                self.get_logger().info('{} is not found.'.format(related_id))
                 return
 
             related_msg = self.data_[related_id].find(msg.header.stamp)
